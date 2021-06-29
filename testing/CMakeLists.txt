@@ -1,0 +1,12 @@
+find_package(GTest REQUIRED) 
+include_directories(${GTEST_INCLUDE_DIRS}) 
+#add_executable(tests tests.cpp) 
+#target_link_libraries(tests ${GTEST_LIBRARIES} pthread) 
+
+file( GLOB APP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp )
+foreach( sourcefile ${APP_SOURCES} )
+    file(RELATIVE_PATH filename ${CMAKE_CURRENT_SOURCE_DIR} ${sourcefile})
+    string( REPLACE ".cpp" "" file ${filename} )
+    add_executable( ${file} ${sourcefile} )
+    target_link_libraries( ${file} data_structures_lib ${GTEST_LIBRARIES} pthread )
+endforeach( sourcefile ${APP_SOURCES} )
